@@ -1,0 +1,22 @@
+abstract class shape{
+int x,y;
+abstract void printArea();
+shape(int a,int b){
+x=a;
+y=b;
+}
+}
+class rectangle extends shape{
+rectangle(int a,int b){
+super(a,b);
+}
+void printArea(){
+System.out.println("The rectangle area is "+a*b);
+}
+}
+class jar{
+public static void main(String args[]){
+rectangle r = new rectangle(1,2);
+r.printArea();
+}
+}

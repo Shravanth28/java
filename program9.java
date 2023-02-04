@@ -1,84 +1,20 @@
-class Q{
-    int n;
-    boolean valueset=false;
-    synchronized int get()
-    {
-        while(!valueset)
-        {
-            try
-            {
-                wait();
-            }
-            catch(InterruptedException e)
-            {
-                System.out.println("InterruptedException caught");
-            }
-        }
-        System.out.println("Got : "+n);
-        valueset=false;
-        notify();
-        return n;
+import java.util.Scanner;
+class Main{
+public static void main(String args[]){
+    Scanner sc = new Scanner(System.in);
+    int a = sc.nextInt();
+    try{
+       int b = 42/a;
+       int c[] = {1};
+        c[43] = {44};
     }
-    synchronized void put(int n)
-    {
-        while(valueset)
-        {
-            try
-            {
-                wait();
-            }
-            catch(InterruptedException e)
-            {
-                System.out.println("InterruptedException caught");
-            }
-        }
-        this.n=n;
-        valueset=true;
-        System.out.println("Put :"+n);
-        notify();
+    catch(ArithmeticException e){
+    System.out.prinltn("The exception is "+e);
     }
-
+    catch(ArrayIndexOutOfBounds e){
+    System.out.prinltn("The exception is "+e);
+    }
+    System.out.prinlnt("The value of a is "+a);
+        
 }
-class Producer implements Runnable
-{
-    Q q;
-    Producer(Q q)
-    {
-        this.q=q;
-        new Thread(this,"Producer").start();
-    }
-    public void run()
-    {
-        int i=0;
-        while(true)
-        {
-            q.put(i++);
-        }
-    }
-}
-class Consumer implements Runnable
-{
-    Q q;
-    Consumer(Q q)
-    {
-        this.q=q;
-        new Thread(this,"Consumer").start();
-    }
-    public void run()
-    {
-        while(true)
-        {
-            q.get();
-        }
-    }
-}
-class PCFixed
-{
-    public static void main(String args[])
-    {
-        Q q=new Q();
-        new Producer(q);
-        new Consumer(q);
-        System.out.println("Press Contol-c to stop");
-    }
 }
